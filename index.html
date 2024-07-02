@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count the Pizza Slice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Fraction Activity</h1>
+        <p id="head">Count the Pizza Slice below:</p>
+        <div class="Activity">
+            <div class="pizza-slice"></div>
+            <div class="user-input">
+                <input type="text" name="userInput" class="userInput" />
+                <hr>
+                <span id="denomenator" style="text-align: center;"><strong>/5</strong></span>
+            </div>
+        </div>
+        <button class="btn-submit">Submit</button>
+        <div class="score" id="score"></div>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+       
+      const questions=[{
+            question : " <img src='1-5.png'>",
+            answer: "1"
+        },
+        {
+            question : "<img src='2-5.png'>",
+            answer: "2"
+            
+        },
+        {
+            question : "<img src='3-5.png'>",
+            answer: "3"
+            
+        },
+        {
+            question : "<img src='4-5.png'>",
+            answer: "4"
+            
+        },
+        {
+            question : "<img src='5-5.png'>",
+            answer: "5"
+        } ];
+        let currentIndexOfQuestion = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            const pizzaSlice = document.querySelector('.pizza-slice');
+            pizzaSlice.innerHTML = questions[currentIndexOfQuestion].question;
+            document.querySelector('#feedback').textContent = "";
+        }
+
+        function checkAnswer() {
+            const feedback = document.querySelector('#feedback');
+            const answerInput = document.querySelector('.userInput');
+            const correctAnswer = questions[currentIndexOfQuestion].answer;
+            const userInput = answerInput.value.trim(); // Trim to remove any leading/trailing whitespace
+            
+            if (correctAnswer === userInput) {
+                feedback.textContent = 'Correct!';
+                score++;
+            } else {
+                feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}`;
+            }
+
+            if (currentIndexOfQuestion === questions.length - 1) { // Check if it's the last question
+                feedback.innerHTML = `You answered ${score} out of ${questions.length} questions correctly!`;
+                feedback.style.backgroundColor = 'green';
+                feedback.style.color = '#fff';
+            } else {
+                currentIndexOfQuestion++;
+                displayQuestion();
+            }
+
+            answerInput.value = "";
+        }
+
+        const submitButton = document.querySelector('.btn-submit');
+        submitButton.addEventListener('click', () => {
+            checkAnswer();
+        });
+
+        displayQuestion();
+    </script>
+</body>
+</html>
